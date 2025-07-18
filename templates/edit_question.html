@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2, h3 {
+        color: #333;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+        background-color: white;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        width: 300px;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"], textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    button, input[type="submit"], input[type="reset"] {
+        padding: 10px 15px;
+        margin: 10px 5px 0 0;
+        background-color: #007BFF;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover, input[type="submit"]:hover, input[type="reset"]:hover {
+        background-color: #0056b3;
+    }
+
+    a button {
+        background-color: #007BFF;
+    }
+
+    a button:hover {
+        background-color: #0056b3;
+    }
+
+    .centered {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .navbar {
+        background-color: #343a40;
+        overflow: hidden;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .navbar a {
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .navbar a:hover {
+        background-color: #495057;
+    }
+</style>
+
+    <title>Edit Question</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="{{ url_for('quiz_management') }}">Quiz Management</a>
+        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        <a href="{{ url_for('admin_summary') }}">User Summary</a>
+        <a href="{{ url_for('signup') }}">Logout</a>
+</div>
+
+    <h2>Edit Question</h2>
+    <form method="POST">
+
+        <label>Statement:</label><br>
+        <textarea name="statement" rows="3" required></textarea><br><br>
+    
+        <label>Option 1:</label><br>
+        <input type="text" name="opt1" required><br><br>
+    
+        <label>Option 2:</label><br>
+        <input type="text" name="opt2" required><br><br>
+    
+        <label>Option 3:</label><br>
+        <input type="text" name="opt3" required><br><br>
+    
+        <label>Option 4:</label><br>
+        <input type="text" name="opt4" required><br><br>
+    
+        <label>Correct Option (1-4):</label><br>
+        <input type="number" name="correct" min="1" max="4" required><br><br>
+    
+        <input type="submit" value="Save and Finish">
+        <a href="{{ url_for('quiz_management') }}"><button type="button">Cancel</button></a>
+    </form>
+    
+</body>
+</html>

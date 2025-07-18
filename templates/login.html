@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Master - Login</title>
+    
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2, h3 {
+        color: #333;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+        background-color: white;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        width: 300px;
+    }
+
+    label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            font-weight: bold;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"], textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-weight: bold;
+    }
+
+    button, input[type="submit"], input[type="reset"] {
+        padding: 10px 15px;
+        margin: 10px 5px 0 0;
+        background-color: #007BFF;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover, input[type="submit"]:hover, input[type="reset"]:hover {
+        background-color: #0056b3;
+    }
+
+    a button {
+        background-color: #28a745;
+    }
+
+    a button:hover {
+        background-color: #218838;
+    }
+
+    .centered {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .success_msg {
+        text-align: center;
+        margin: auto;
+        color:rgb(5, 5, 110);
+        font-weight: bold;
+    }
+
+    .err_msg {
+        text-align: center;
+        margin: auto;
+        color:red;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+<body>
+    <h2 class="centered">Login</h2>
+    <form action="/login" method="post">
+        <label for="Input1">Email:</label>
+        <input type="email" name="username" id="Input1" placeholder="ad@gmail.com" required>
+
+        <label for="Input2">Password:</label>
+        <input type="password" name="password" id="Input2" placeholder="Password" required> <!--the 'name' variables in email input and password input wil be used later to GET/POST the information filled in those fields-->
+        
+        <input type="submit" value="Login"> <!--the 'value' attribute is the text that'll be displayed on the button and only if the input type is submit then only the input will be sent to the backend to process -->
+        <p><a href="/register">New user? Register</a></p>
+        {% if succ_msg %}
+            <div class="success_msg">{{ succ_msg }}</div>
+        {% endif %}
+        {% if err_msg %}
+            <div class="err_msg">{{ err_msg }}</div>
+        {% endif %}
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            overflow: hidden;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #495057;
+        }
+
+        .subject-container {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .subject-card {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .subject-desc {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .chapter-list {
+            margin-top: 15px;
+        }
+
+        .chapter-item {
+            padding: 10px;
+            border: 1px solid #333131;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .chapter-item span {
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .actions a:hover {
+            color: #0056b3;
+        }
+
+        .no-data {
+            color: gray;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .no-data-quiz {
+            color: gray;
+            text-align: left;
+        }
+
+        .add-buttons {
+            margin-top: 30px;
+        }
+
+        .add-buttons a button {
+            margin: 0 10px;
+            background-color: #05a367;
+        }
+
+        .add-buttons a button:hover {
+            background-color: #076642;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            color: rgb(38, 24, 224);
+            cursor: pointer;
+        }
+    </style>
+
+    <title>User Dashboard</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="{{ url_for('user_dashboard', name=user.username) }}">User Dashboard</a>
+    <a href="{{ url_for('scores', name=user.username) }}">Scores</a>
+    <a href="{{ url_for('summary', name=user.username) }}">Summary</a>
+    <a href="{{ url_for('signup') }}">Logout</a>
+    <form class="form-inline my-2 my-lg-0" action="{{ url_for('search_quizzes', name = user.username) }}" method="GET">
+        <input class="form-control mr-sm-2 search-input" type="search" name="query" placeholder="Search Quiz" aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0 search-btn" type="submit">Search</button>
+    </form>
+
+</div>
+
+    <h2>Welcome User</h2>
+    <h3>Upcoming Quizzes</h3>
+    <div class="subject-container">
+        {% if quizzes %}
+            {% for quiz in quizzes %}
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div>
+                        <div class="subject-name">{{ quiz.name }} ({{ quiz.chapter.name }})</div>
+                    </div>
+
+                    <div class="actions">
+                        <a href="{{ url_for('view_quiz', quiz_id = quiz.id, name=user.username) }}">View</a> |
+                        {% if quiz.date_of_quiz >= current_date %}
+                            <a href="{{ url_for('start_quiz', quiz_id = quiz.id, name=user.username) }}">Start</a>
+                        {% else %}
+                            <span style="color: red; font-weight: bold;">Expired</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if quiz.questions %}
+                <div class="chapter-list">
+                    {#{% for question in quiz.questions %}#}
+                    <div class="chapter-item">
+                        <div><span><strong>Number of Questions:</strong></span> {{ quiz.questions|length }}</div>
+                        <div><span><strong>Deadline:</strong></span> {{ quiz.date_of_quiz }}</div>
+                        <div><span><strong>Time Duration:</strong></span> {{ quiz.time_duration }}</div>
+                        <div><span><strong>Remarks:</strong></span> {{ quiz.remarks }}</div>
+                        
+                    </div>
+                    {#{% endfor %}#}
+                </div>
+                {% else %}
+                <div class="chapter-list">
+                    <div class="chapter-item">
+                        <div class="no-data-quiz">No Questions available</div>
+                        <div><span><strong>Deadline:</strong></span> {{ quiz.date_of_quiz }}</div>
+                        <div><span><strong>Time Duration:</strong></span> {{ quiz.time_duration }}</div>
+                        <div><span><strong>Remarks:</strong></span> {{ quiz.remarks }}</div>
+                    </div>
+                </div>
+                {% endif %}
+                
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-data">No Quizzes found</div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

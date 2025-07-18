@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            overflow: hidden;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #495057;
+        }
+
+        .subject-container {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .subject-card {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .subject-desc {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .chapter-list {
+            margin-top: 15px;
+        }
+
+        .chapter-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .chapter-item span {
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .actions a:hover {
+            color: #0056b3;
+        }
+
+        .no-data {
+            color: gray;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .add-buttons {
+            margin-top: 30px;
+        }
+
+        .add-buttons a button {
+            margin: 0 10px;
+            background-color: #05a367;
+        }
+
+        .add-buttons a button:hover {
+            background-color: #076642;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-button {
+            padding: 10px 15px;
+            border: none;
+            color: rgb(38, 24, 224);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="{{ url_for('quiz_management') }}">Quiz Management</a>
+        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        <a href="{{ url_for('admin_summary') }}">User Summary</a>
+        <a href="{{ url_for('signup') }}">Logout</a>
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('search_admin') }}" method="GET">
+        <input class="form-control mr-sm-2 search-input" type="search" name="query" placeholder="Search Subject" aria-label="Search">
+        <button class="search-button" class="btn btn-outline-light my-2 my-sm-0 search-btn" type="submit">Search</button>
+    </form>
+    </div>
+
+    <h2>Admin Dashboard</h2>
+    <h3>Subjects</h3>
+
+    <div class="subject-container">
+        {% if subjects %}
+            {% for subject in subjects %}
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div>
+                        <div class="subject-name">{{ subject.name }}</div>
+                        <div class="subject-desc">{{ subject.description }}</div>
+                    </div>
+
+                    <div class="actions">
+                        <a href="{{ url_for('edit_subject', subject_id=subject.id) }}">Edit</a> |
+                        <a href="{{ url_for('delete_subject', subject_id=subject.id) }}" onclick="return confirm('Are you sure you want to delete this Subject?')">Delete</a>
+                    </div>
+                </div>
+
+                {% if subject.chapters %}
+                <div class="chapter-list">
+                    {% for chapter in subject.chapters %}
+                    <div class="chapter-item">
+                        <div><span><strong>Chapter:</strong></span> {{ chapter.name }}</div>
+                        <div><span><strong>Description:</strong></span> {{ chapter.description }}</div>
+                        <div class="actions">
+                            <a href="{{ url_for('edit_chapter', chapter_id=chapter.id) }}">Edit</a> |
+                            <a href="{{ url_for('delete_chapter', chapter_id=chapter.id) }}" onclick="return confirm('Are you sure you want to delete this Chapter?')">Delete</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div class="no-data">No chapters available</div>
+                {% endif %}
+                <div class="actions" style="margin-top: 10px;">
+                    <a href="{{ url_for('add_chapter', subject_id=subject.id) }}"><button style="background-color: #007BFF;">+ Chapter</button></a>
+                </div>
+                
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-data">No subjects found</div>
+        {% endif %}
+    </div>
+
+    <div class="add-buttons">
+        <a href="{{ url_for('add_subject') }}"><button>+ Subject</button></a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Master - Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .success_msg {
+            text-align: center;
+            margin: auto;
+            color:rgb(5, 5, 110)
+        }
+
+        .err_msg {
+            text-align: center;
+            margin: auto;
+            color:red
+        }
+    </style>
+</head>
+<body>
+    <h2>Register</h2>
+    <form action="/register" method="post">
+        <label for="Input0">Username:</label>
+        <input type="text" name="username" id="Input0" placeholder="John" required>
+
+        <label for="Input1">Email:</label>
+        <input type="email" name="email" id="Input1" placeholder="ad@gmail.com" required>
+
+        <label for="Input2">Password:</label>
+        <input type="password" name="password" id="Input2" placeholder="Password" required>
+
+        <label for="Input3">Full Name:</label>
+        <input type="text" name="fullname" id="Input3" placeholder="John Connor" required>
+
+        <label for="Input4">Qualification:</label>
+        <input type="text" name="qualification" id="Input4" placeholder="B.Tech" required>
+
+        <label for="Input5">Date of Birth:</label>
+        <input type="date" name="dob" id="Input5" required>
+
+        <label for="Input6">Description:</label>
+        <input type="text" name="description" id="Input6" required>
+
+        <input type="submit" value="Register">
+        <p><a href="/login">Already have an account? Login</a></p>
+        <div class="success_msg">{{succ_msg}}</div>
+    </form>
+</body>
+</html>

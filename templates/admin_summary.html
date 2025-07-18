@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Summary</title>
+</head>
+<style>
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.stats-box {
+    background: #f4f4f4;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+h2, h3 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+th {
+    background: #007bff;
+    color: white;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #218838;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.navbar {
+    background-color: #343a40;
+    overflow: hidden;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #495057;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.performance {
+    margin-top: 30px;
+}
+
+.stats {
+    margin-top: 30px;
+    font-size: 18px;
+}
+</style>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('quiz_management') }}">Quiz Management</a>
+        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        <a href="{{ url_for('admin_summary') }}">User Summary</a>
+        <a href="{{ url_for('signup') }}">Logout</a>
+    </div>
+
+    <h2 class="container">Admin Summary Charts</h2>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
+        <div class="chart-container">
+            <div>
+                <h3>Subject-wise Top Scores</h3>
+                <img src="data:image/png;base64,{{ subject_chart }}" alt="Subject Chart">
+            </div>
+            <div>
+                <h3>Subject-wise Quiz Attempts</h3>
+                <img src="data:image/png;base64,{{ attempt_chart }}" alt="Attempt Chart">
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3>Most Active User</h3>
+            <p><strong>User:</strong> {{ most_active_user }}</p>
+            <p><strong>Quizzes Attempted:</strong> {{ most_attempts }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
